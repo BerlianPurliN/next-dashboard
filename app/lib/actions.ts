@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import { signOut } from '@/auth';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -34,7 +35,6 @@ export type State = {
 };
 
 export async function createInvoice(prevState: State, formData: FormData) {
-  // Validate form fields using Zod
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
@@ -136,4 +136,8 @@ export async function authenticate(
     }
     throw error;
   }
+}
+
+export async function signout() {
+  await signOut();
 }
